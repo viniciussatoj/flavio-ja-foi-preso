@@ -1,0 +1,21 @@
+{
+  "name": "flavio-ja-foi-preso",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/paginas-de-compartilhamento.js",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "dialkit": "^2.0.2",
+    "interface-kit": "^0.1.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "vite": "^6.4.5"
+  },
+  "allowScripts": {
+    "esbuild": true
+  }
+}

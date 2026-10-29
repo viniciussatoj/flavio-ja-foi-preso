@@ -1,0 +1,749 @@
+/* Os valores vem de src/scripts/layout-config.js, escritos no :root por
+   aplicarLayout(). Os padroes abaixo so seguram a pagina se o JS falhar. */
+:root {
+  --fundo: #fffdf7;
+  --texto: #1d1d1d;
+  --vermelho: #ff0000;
+  --azul: #0900ff;
+  --claro: #f4f4f4;
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Lato", system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--sans);
+}
+img { display: block; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--azul); outline-offset: 3px; }
+
+/* ---------- Pagina ---------- */
+
+.pagina {
+  width: min(var(--d-coluna, 916px), 100% - 2 * var(--m-margem, 20px));
+  margin-inline: auto;
+  padding-top: var(--d-topo, 127px);
+  padding-bottom: 96px;
+}
+
+.titulo {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 var(--e-tituloMotivo, 46px);
+  font-family: var(--serif);
+  font-size: var(--d-titulo, 120px);
+  font-weight: 400;
+  line-height: var(--d-tituloEntrelinha, 110px);
+}
+.titulo__l1 { color: var(--titulo-l1-d, var(--texto)); }
+.titulo__l2 { color: var(--titulo-l2-d, var(--vermelho)); font-style: italic; }
+
+.motivo {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  color: var(--texto);
+  font-family: var(--serif);
+  font-size: var(--d-motivo, 24px);
+  font-style: italic;
+  text-decoration: none;
+}
+.motivo span {
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+.motivo__seta { transition: transform .25s ease; }
+.motivo:hover .motivo__seta { transform: translateX(8px); }
+.motivo__seta--mob { display: none; }
+
+/* ---------- Abas ---------- */
+
+.abas {
+  display: flex;
+  gap: 16px;
+  margin: var(--e-motivoAbas, 64px) 0 var(--e-abasConteudo, 32px);
+}
+.pilula {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 8px 6px;
+  border: 1px solid var(--azul);
+  border-radius: 32px;
+  background: transparent;
+  color: var(--azul);
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: normal;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+/* So as abas seguem o layout-config; o "Compartilhar" dos stories fica
+   com os 12px do Figma. */
+.abas .pilula {
+  padding: 6px 16px 8px;
+  font-size: var(--d-pilula, 14px);
+}
+.pilula[aria-selected="true"],
+.pilula--cheia {
+  background: var(--azul);
+  color: var(--claro);
+}
+.pilula:not([aria-selected="true"]):not(.pilula--cheia):hover {
+  background: color-mix(in srgb, var(--azul) 8%, transparent);
+}
+
+/* ---------- Linha do tempo ---------- */
+
+.fatos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-entreItens, 32px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fato {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fato__frase {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: var(--d-tituloItem, 40px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+}
+.data {
+  padding: 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-style: normal;
+  opacity: .4;
+  white-space: nowrap;
+}
+.fontes-curtas {
+  margin: 0;
+  color: var(--azul);
+  font-size: 12px;
+}
+.fontes-curtas a {
+  color: inherit;
+  text-underline-position: from-font;
+}
+
+/* ---------- Acusacoes ---------- */
+
+.secoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-entreSecoes, 48px);
+  max-width: var(--d-colunaCasos, 800px);
+}
+.secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-rotuloSecao, 16px);
+}
+.secao__rotulo {
+  margin: 0;
+  color: var(--vermelho);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.secao__casos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-entreItens, 32px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.caso {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.caso__titulo {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: var(--d-tituloItem, 40px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+}
+/* O titulo tambem abre o story, como o "Mais detalhes". */
+.caso__link {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: underline transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  transition: text-decoration-color .15s ease;
+}
+.caso__link:hover { text-decoration-color: currentColor; }
+.caso__resumo {
+  margin: 0;
+  font-size: var(--d-texto, 16px);
+  line-height: var(--d-textoEntrelinha, 28.8px);
+  opacity: .8;
+}
+.caso__resumo strong { font-weight: 700; }
+.caso__mais {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--azul);
+  font-size: 12px;
+  line-height: 14px;
+  cursor: pointer;
+}
+.caso__mais span {
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+.caso__mais img { transition: transform .2s ease; }
+.caso__mais:hover img { transform: translateX(6px); }
+
+a.caso__mais { text-decoration: none; }
+
+/* ---------- Perguntas frequentes ---------- */
+
+.perguntas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: var(--d-colunaCasos, 800px);
+  margin-top: 96px;
+}
+.pergunta { border-top: 1px solid color-mix(in srgb, var(--texto) 15%, transparent); padding-top: 16px; }
+.pergunta__titulo {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-style: italic;
+  line-height: 1.2;
+  cursor: pointer;
+  list-style: none;
+}
+.pergunta__titulo::-webkit-details-marker { display: none; }
+.pergunta__titulo::after { content: " +"; color: var(--azul); font-style: normal; }
+.pergunta[open] .pergunta__titulo::after { content: " –"; }
+.pergunta__resposta {
+  margin: 12px 0 0;
+  font-size: var(--d-texto, 16px);
+  line-height: var(--d-textoEntrelinha, 28.8px);
+  opacity: .8;
+}
+.atualizado { margin: 8px 0 0; font-size: 12px; opacity: .4; }
+
+/* ---------- Pagina do caso (/c/<slug>/) ---------- */
+
+.pagina--caso { max-width: var(--d-colunaCasos, 800px); }
+.artigo { display: flex; flex-direction: column; gap: 16px; }
+.artigo__migalha { font-size: 12px; }
+.artigo__migalha a { color: var(--azul); }
+.artigo__titulo {
+  margin: 8px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(40px, 6vw, 64px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.05;
+}
+.artigo__meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.artigo__meta .data { padding: 0; }
+.artigo__foto { margin: 8px 0; }
+.artigo__foto img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.artigo__foto figcaption { margin-top: 6px; font-size: 11px; opacity: .5; }
+.artigo__chamada,
+.artigo__texto {
+  margin: 0;
+  font-size: var(--d-texto, 16px);
+  line-height: var(--d-textoEntrelinha, 28.8px);
+}
+.artigo__texto { opacity: .85; }
+.artigo__subtitulo {
+  margin: 24px 0 0;
+  color: var(--vermelho);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.artigo__story { align-self: flex-start; margin-top: 8px; padding: 6px 16px 8px; font-size: 14px; }
+.artigo__fontes,
+.artigo__outros {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+}
+.artigo__fontes a,
+.artigo__outros a { color: var(--azul); }
+.artigo__outros a { font-family: var(--serif); font-size: 20px; font-style: italic; color: var(--texto); }
+
+.rodape {
+  max-width: var(--d-colunaCasos, 800px);
+  margin-top: 96px;
+  font-size: 10px;
+  line-height: 16px;
+  opacity: .5;
+}
+.rodape p { margin: 0; }
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 720px) {
+  .pagina {
+    width: auto;
+    margin: 0;
+    padding: var(--m-topo, 80px) var(--m-margem, 20px) 64px;
+  }
+  .titulo {
+    gap: 16px;
+    margin-bottom: 34px;
+    font-size: var(--m-titulo, 64px);
+    line-height: var(--m-tituloEntrelinha, 72px);
+  }
+  .titulo__l1 { color: var(--titulo-l1-m, var(--vermelho)); }
+  .titulo__l2 { color: var(--titulo-l2-m, var(--texto)); }
+  .motivo {
+    display: flex;
+    font-size: var(--m-motivo, 20px);
+  }
+  .motivo__seta--desk { display: none; }
+  .motivo__seta--mob { display: block; flex: 1 0 0; min-width: 0; width: 100%; height: 26.6586px; }
+  .abas { margin-top: 69px; }
+  .abas .pilula { padding: 4px 8px 6px; font-size: var(--m-pilula, 16px); }
+
+  .fato__frase { display: flex; flex-direction: column; align-items: flex-start; font-size: var(--m-tituloItem, 32px); }
+  .fato__frase .data { padding: 0; font-size: 10px; }
+  .fontes-curtas { font-size: 10px; }
+
+  .caso__titulo { display: flex; flex-direction: column; font-size: var(--m-tituloItem, 32px); }
+  .caso__titulo .data { padding: 4px 0; }
+  .caso__resumo { font-size: var(--m-texto, 12px); line-height: var(--m-textoEntrelinha, 20px); }
+}
+
+/* ---------- Story ---------- */
+
+.story {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+}
+.story[open] { animation: entra .2s ease; }
+.story::backdrop {
+  background: var(--story-fundo, rgb(0 0 0 / .6));
+  backdrop-filter: blur(var(--story-desfoque, 2px));
+}
+html:has(.story[open]) { overflow: hidden; }
+
+.story__fechar-pagina {
+  position: absolute;
+  top: 43px;
+  right: 50px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -11px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* Desktop: o cartao ativo no meio, os seguintes pequenos a direita,
+   alinhados por baixo. As posicoes saem do story.js; aqui so as
+   transicoes, para a troca deslizar. */
+.story__faixa {
+  position: absolute;
+  inset: 0;
+}
+.cartao {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--story-mini-largura, 160px);
+  height: var(--story-mini-altura, 280px);
+  overflow: hidden;
+  border-radius: var(--story-raio, 8px);
+  background: #000;
+  color: #fff;
+  transition:
+    transform var(--story-duracao, .35s) var(--story-curva, ease),
+    width var(--story-duracao, .35s) var(--story-curva, ease),
+    height var(--story-duracao, .35s) var(--story-curva, ease),
+    opacity var(--story-duracao, .35s) var(--story-curva, ease);
+}
+.cartao[data-estado="ativo"] {
+  width: var(--story-largura, 412px);
+  height: min(var(--story-altura, 917px), 100dvh - 108px);
+}
+.cartao[data-estado="antes"] { opacity: 0; pointer-events: none; }
+.cartao[data-estado="depois"] { cursor: pointer; }
+.cartao[data-estado="longe"] { opacity: 0; pointer-events: none; }
+
+/* Sem JS, a foto cobre o cartao. Com JS, enquadrar() (story.js) escreve
+   tamanho e posicao para o rosto ficar em destaque; a troca acompanha a
+   animacao do cartao. */
+.cartao__foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  transition:
+    width var(--story-duracao, .35s) var(--story-curva, ease),
+    height var(--story-duracao, .35s) var(--story-curva, ease),
+    left var(--story-duracao, .35s) var(--story-curva, ease),
+    top var(--story-duracao, .35s) var(--story-curva, ease);
+}
+.cartao__fechar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+  display: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  filter: drop-shadow(0 0 2px rgb(0 0 0 / .6));
+  cursor: pointer;
+}
+
+.cartao__conteudo {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 16px;
+  background: #000;
+  backdrop-filter: blur(4px);
+}
+/* Credito da foto: logo acima do quadro preto, sobre a imagem. */
+.cartao__credito {
+  position: absolute;
+  right: 8px;
+  bottom: calc(100% + 6px);
+  max-width: calc(100% - 16px);
+  margin: 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgb(0 0 0 / .55);
+  color: #fff;
+  font-size: 10px;
+  line-height: 14px;
+  opacity: .85;
+  text-align: right;
+}
+.cartao__credito a { color: inherit; text-underline-offset: 2px; }
+
+/* Caso sem foto liberada: o cartao inteiro e o quadro preto, com o
+   texto embaixo e o titulo da capa maior. */
+.cartao--sem-foto .cartao__conteudo {
+  top: 0;
+  justify-content: flex-end;
+}
+.cartao--sem-foto[data-i="0"] .cartao__titulo {
+  font-size: 44px;
+  line-height: 46px;
+}
+/* Fontes: com foto, o quadro preto fica embaixo como nos outros
+   cartoes; sem foto, ocupa o cartao inteiro (o top: 0 do sem-foto). */
+.cartao--fontes .cartao__conteudo {
+  gap: 8px;
+  padding: 16px;
+  justify-content: flex-end;
+}
+/* Com foto, o quadro tem a altura do conteudo: o flex 1 0 0 do cartao
+   cheio zeraria a altura da lista. */
+.cartao--fontes:not(.cartao--sem-foto) .cartao__fontes,
+.cartao--fontes:not(.cartao--sem-foto) .cartao__fontes .cartao__textos {
+  flex: none;
+  padding: 8px 0 16px;
+}
+
+.cartao__textos { display: flex; flex-direction: column; gap: 8px; }
+.cartao__titulo {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 32px;
+  text-shadow: 0 0 13.9px #000;
+}
+.cartao__data {
+  margin: 0;
+  color: var(--claro);
+  font-size: 12px;
+  opacity: .4;
+}
+.cartao__texto {
+  margin: 0;
+  font-size: 13px;
+  line-height: 22px;
+  opacity: .8;
+  text-shadow: 0 0 6px rgb(0 0 0 / .4);
+}
+.cartao__texto strong { font-weight: 700; }
+
+.cartao__fontes {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 0;
+  padding: 32px 0;
+  text-align: center;
+}
+.cartao__fontes .cartao__textos {
+  flex: 1 0 0;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+}
+.cartao__fontes .cartao__titulo { font-size: 24px; }
+.cartao__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 22px;
+  list-style: none;
+}
+.cartao__lista a { color: #fff; opacity: .8; text-decoration: none; }
+.cartao__lista a:hover { opacity: 1; text-decoration: underline; }
+.pilula--grande {
+  width: 100%;
+  padding: 8px 24px;
+  font-size: 16px;
+  line-height: 24px;
+}
+.cartao .pilula--cheia { align-self: flex-start; }
+.cartao .pilula--grande { align-self: stretch; }
+
+.cartao__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  line-height: 22px;
+  text-shadow: 0 0 6px rgb(0 0 0 / .4);
+}
+.cartao__seta {
+  display: grid;
+  place-items: center;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.cartao__seta--esq img { transform: rotate(180deg); }
+.cartao__seta:disabled { opacity: .3; cursor: default; }
+
+/* Pequenos (os seguintes, no desktop): so titulo e contador, como no
+   Figma. */
+@media (min-width: 721px) {
+  .cartao:not([data-estado="ativo"]) .pilula,
+  .cartao:not([data-estado="ativo"]) .cartao__data,
+  .cartao:not([data-estado="ativo"]) .cartao__texto,
+  .cartao:not([data-estado="ativo"]) .cartao__seta,
+  .cartao:not([data-estado="ativo"]) .cartao__lista,
+  .cartao:not([data-estado="ativo"]) .cartao__credito { display: none; }
+  .cartao:not([data-estado="ativo"]) .cartao__conteudo { gap: 4px; padding: 7px; }
+  .cartao:not([data-estado="ativo"]) .cartao__titulo { font-size: 16px; line-height: 16px; }
+  .cartao:not([data-estado="ativo"]) .cartao__nav { justify-content: flex-start; font-size: 10px; line-height: 12px; }
+  .cartao--fontes:not([data-estado="ativo"]) .cartao__fontes { padding: 8px 0; }
+}
+
+/* Mobile: como um story do Instagram. Cada cartao ocupa a tela inteira,
+   sem cantos e sem espiar o proximo; passa de lado com o dedo (rolagem
+   com encaixe, a mesma mecanica da faixa do portfolio-v2), e as
+   barrinhas no topo dizem em qual cartao se esta. */
+@media (max-width: 720px) {
+  .story { position: fixed; inset: 0; }
+  .story::backdrop { background: #000; backdrop-filter: none; }
+  .story__fechar-pagina { display: none; }
+  .story__faixa {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .story__faixa::-webkit-scrollbar { display: none; }
+  .cartao,
+  .cartao[data-estado] {
+    position: relative;
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    transform: none !important;
+    opacity: 1;
+    pointer-events: auto;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    cursor: auto;
+    transition: none;
+  }
+  .cartao__fechar { display: block; top: 24px; }
+}
+
+/* Barrinhas de progresso, so no mobile. */
+.cartao__progresso {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  left: 8px;
+  z-index: 1;
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cartao__progresso li {
+  flex: 1 1 0;
+  height: 2px;
+  border-radius: 2px;
+  background: rgb(255 255 255 / .35);
+}
+.cartao__progresso li[data-feito] { background: #fff; }
+@media (min-width: 721px) {
+  .cartao__progresso { display: none; }
+}
+
+/* A pagina de tras nao rola por baixo do story (o iOS ignora o overflow
+   so no html). */
+body:has(.story[open]) { overflow: hidden; }
+
+/* ---------- Compartilhar ---------- */
+
+/* Um <dialog> proprio: aberto por cima do story, que tambem esta na
+   camada do topo. */
+.compartilhar {
+  width: min(360px, 100% - 32px);
+  max-width: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+.compartilhar::backdrop { background: rgb(0 0 0 / .5); }
+.compartilhar__caixa {
+  width: min(360px, 100%);
+  padding: 20px 16px 16px;
+  border-radius: 8px;
+  background: #000;
+  color: #fff;
+  animation: sobe .2s ease;
+}
+.compartilhar__titulo {
+  margin: 0 0 16px;
+  font-family: var(--serif);
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+}
+.compartilhar__redes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+.compartilhar__redes a,
+.compartilhar__redes button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px;
+  border: 1px solid rgb(255 255 255 / .25);
+  border-radius: 32px;
+  background: none;
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.compartilhar__redes a:hover,
+.compartilhar__redes button:hover { border-color: var(--azul); background: var(--azul); }
+.compartilhar__fechar {
+  width: 100%;
+  padding: 8px;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 14px;
+  opacity: .6;
+  cursor: pointer;
+}
+
+/* Popover: tambem na camada do topo, por cima dos dialogs. */
+.aviso {
+  position: fixed;
+  inset: auto auto 24px 50%;
+  margin: 0;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 32px;
+  background: var(--azul);
+  color: var(--claro);
+  font-size: 14px;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  transition: opacity .2s ease, transform .2s ease;
+  pointer-events: none;
+}
+.aviso[data-visivel] { opacity: 1; transform: translate(-50%, 0); }
+
+@keyframes entra { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sobe { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .story[open], .compartilhar__caixa { animation: none; }
+  .cartao { transition: none; }
+}

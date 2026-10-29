@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Flávio Bolsonaro já foi preso? Acusações, investigações e onde está cada caso</title>
+    <meta name="description" content="Flávio Bolsonaro ainda não foi preso, mas fugiu do país em 27/10/2026. Veja as 17 acusações e investigações contra ele, da rachadinha ao Banco Master, com o status e as fontes de cada caso." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Flávio já está preso?" />
+    <meta property="og:title" content="Flávio já está preso? Ainda não." />
+    <meta property="og:description" content="As acusações, investigações e suspeitas contra Flávio Bolsonaro nos últimos 20 anos, com o status e as fontes de cada caso." />
+    <meta name="twitter:card" content="summary" />
+    <!--seo-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lato:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <!--inicio-pagina-->
+    <main class="pagina">
+      <header class="topo">
+        <h1 class="titulo">
+          <span class="titulo__l1">Flávio já está preso?</span>
+          <span class="titulo__l2">Ainda não.</span>
+        </h1>
+        <a class="motivo" href="#acusacoes" data-ir-para="acusacoes">
+          <span>Por que Flávio Bolsonaro seria preso?</span>
+          <img class="motivo__seta motivo__seta--desk" src="/img/seta-grande.svg" width="95.7078" height="26.7078" alt="" />
+          <img class="motivo__seta motivo__seta--mob" src="/img/seta-grande-mobile.svg" width="83.6645" height="26.6586" alt="" />
+        </a>
+      </header>
+
+      <div class="abas" role="tablist" aria-label="Seções">
+        <button class="pilula" role="tab" id="aba-linha" aria-controls="painel-linha" aria-selected="true">Linha do tempo</button>
+        <button class="pilula" role="tab" id="aba-acusacoes" aria-controls="painel-acusacoes" aria-selected="false" tabindex="-1">Acusações e suspeitas</button>
+      </div>
+
+      <section class="painel painel--linha" id="painel-linha" role="tabpanel" aria-labelledby="aba-linha">
+        <ol class="fatos" id="fatos"><!--fatos--></ol>
+      </section>
+
+      <section class="painel painel--acusacoes" id="painel-acusacoes" role="tabpanel" aria-labelledby="aba-acusacoes" hidden>
+        <div class="secoes" id="secoes"><!--secoes--></div>
+      </section>
+
+      <!--perguntas-->
+
+      <footer class="rodape">
+        <p>Investigação e denúncia não são condenação. Flávio Bolsonaro nega todas as acusações. Cada caso traz as fontes jornalísticas consultadas; o status de cada um é o mais recente encontrado e pode ter mudado.</p>
+      </footer>
+    </main>
+    <!--fim-pagina-->
+
+    <dialog class="story" id="story" aria-label="Detalhes do caso">
+      <button class="story__fechar-pagina" type="button" aria-label="Fechar">
+        <img src="/img/fechar-pagina.svg" width="22.7587" height="22.7587" alt="" />
+      </button>
+      <div class="story__faixa" id="story-faixa"></div>
+    </dialog>
+
+    <dialog class="compartilhar" id="compartilhar" aria-labelledby="compartilhar-titulo">
+      <div class="compartilhar__caixa">
+        <p class="compartilhar__titulo" id="compartilhar-titulo">Compartilhar</p>
+        <ul class="compartilhar__redes" id="compartilhar-redes"></ul>
+        <button class="compartilhar__fechar" type="button">Fechar</button>
+      </div>
+    </dialog>
+
+    <p class="aviso" id="aviso" popover="manual" role="status" aria-live="polite"></p>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
