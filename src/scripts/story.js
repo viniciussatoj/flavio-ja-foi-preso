@@ -54,6 +54,7 @@ function navDe(i, total) {
     </div>`;
 }
 
+// So no ultimo cartao (Fontes).
 const PILULA_COMPARTILHAR = (classe = "") => `
   <button class="pilula pilula--cheia ${classe}" type="button" data-compartilhar>
     Compartilhar
@@ -107,7 +108,6 @@ export function htmlDoCartao(c, cartao, i, total) {
     ${fechar}
     <div class="cartao__conteudo">
       ${credito}
-      ${PILULA_COMPARTILHAR()}
       <div class="cartao__textos">
         <p class="cartao__titulo">${esc(cartao.titulo)}</p>
         <p class="cartao__data">${esc(c.periodo)} · ${esc(SITUACOES[c.situacao])}</p>
@@ -204,6 +204,11 @@ function passoMobile() {
   return b ? b.offsetLeft - a.offsetLeft : a.getBoundingClientRect().width;
 }
 
+/** O foco vai para o Compartilhar (so no ultimo cartao) ou para a seta
+ *  que avanca. */
+const focar = (el) =>
+  el?.querySelector("[data-compartilhar], .cartao__seta--dir:not(:disabled)")?.focus({ preventScroll: true });
+
 function ir(n, suave = true) {
   const alvo = Math.max(0, Math.min(cartoes.length - 1, n));
   if (MOBILE.matches) {
@@ -216,7 +221,7 @@ function ir(n, suave = true) {
   // O cartao que tinha o foco pode ter saido da tela (inert): o foco
   // segue para o ativo.
   if (focoNoStory || document.activeElement === document.body) {
-    cartoes[atual]?.querySelector("[data-compartilhar]")?.focus({ preventScroll: true });
+    focar(cartoes[atual]);
   }
 }
 
@@ -303,5 +308,5 @@ export function abrirStory(c, aoFecharStory = () => {}) {
   document.fonts.ready.then(() => { if (dialog.open && caso === c) igualar(); });
   faixa.scrollLeft = 0;
   requestAnimationFrame(() => requestAnimationFrame(() => faixa.style.removeProperty("--story-duracao")));
-  cartoes[0]?.querySelector("[data-compartilhar]")?.focus({ preventScroll: true });
+  focar(cartoes[0]);
 }
