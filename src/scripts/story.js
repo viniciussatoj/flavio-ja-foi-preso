@@ -122,11 +122,6 @@ function montar() {
     el.setAttribute("aria-roledescription", "cartão");
     el.setAttribute("aria-label", `${i + 1} de ${todos.length}`);
     el.innerHTML = htmlDoCartao(caso, cartao, i, todos.length);
-    // No desktop o cartao muda de tamanho animado; no fim, o quadro de
-    // texto ja tem a altura final e o enquadramento refaz a conta.
-    el.addEventListener("transitionend", (e) => {
-      if (e.target === el && e.propertyName === "height") enquadrar(el, el.clientWidth, el.clientHeight);
-    });
     faixa.append(el);
     return el;
   });
@@ -134,56 +129,12 @@ function montar() {
 
 const num = (nome) => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(nome)) || 0;
 
-/* Enquadramento das fotos com pessoas: o rosto (ou o grupo de rostos) e
-   o destaque do cartao. foco = centro e altura do grupo de rostos, em
-   fracao da foto (detectado em rostos.html e revisado a mao). O rosto vai
-   para o meio da area que o quadro preto do texto nao cobre e ocupa
-   ALVO_ROSTO dessa area. A foto amplia o que for preciso para o rosto
-   chegar la, ate ZOOM_MAX sobre o "cover". */
-const ALVO_ROSTO = 0.4;
-const ZOOM_MAX = 2.6;
-// Nitidez: cada pixel da foto ocupa no maximo isto em pixels fisicos da
-// tela. Acima disso a ampliacao borra (fotos pequenas, telas densas).
-const NITIDEZ = 1.5;
-
-function enquadrar(el, Cw, Ch) {
-  const img = el.querySelector(".cartao__foto");
-  if (!img || !Cw || !Ch) return;
-  const f = caso.fotos?.[Number(el.dataset.i)] ?? {};
-  const W = img.naturalWidth || f.w;
-  const H = img.naturalHeight || f.h;
-  if (!W || !H) {
-    img.addEventListener("load", () => enquadrar(el, Cw, Ch), { once: true });
-    return;
-  }
-  const capa = Math.max(Cw / W, Ch / H);
-  let s = capa, cx = 0.5, cy = 0.5, alvoY = 0.5;
-  if (f.foco) {
-    ({ x: cx, y: cy } = f.foco);
-    // area livre: do topo do cartao ate o quadro de texto
-    const quadro = el.querySelector(".cartao__conteudo")?.offsetHeight ?? 0;
-    const livre = Math.max(Ch * 0.35, Ch - quadro);
-    alvoY = (livre * 0.5) / Ch;
-    const pelaAltura = (ALVO_ROSTO * livre) / (f.foco.h * H);
-    // escala minima para o rosto subir ate alvoY sem a foto sair do cartao
-    const paraSubir = (Ch * (1 - alvoY)) / (H * Math.max(0.05, 1 - cy));
-    const paraDescer = (Ch * alvoY) / (H * Math.max(0.05, cy));
-    const teto = Math.max(capa, Math.min(capa * ZOOM_MAX, NITIDEZ / (devicePixelRatio || 1)));
-    s = Math.min(Math.max(capa, pelaAltura, paraSubir, paraDescer), teto);
-  }
-  const w = W * s, h = H * s;
-  const left = Math.min(0, Math.max(Cw - w, Cw / 2 - cx * w));
-  const top = Math.min(0, Math.max(Ch - h, alvoY * Ch - cy * h));
-  Object.assign(img.style, { width: `${w}px`, height: `${h}px`, left: `${left}px`, top: `${top}px`, right: "auto", bottom: "auto" });
-}
-
 /** Desktop: escreve a posicao de cada cartao. */
 function posicionar() {
   if (MOBILE.matches) {
     cartoes.forEach((el, i) => {
       el.dataset.estado = i === atual ? "ativo" : "depois";
       el.inert = false;
-      enquadrar(el, el.clientWidth, el.clientHeight);
     });
     return;
   }
@@ -216,8 +167,6 @@ function posicionar() {
     }
     el.dataset.estado = estado;
     el.style.transform = `translate(${x}px, ${y}px)`;
-    if (estado === "ativo") enquadrar(el, larg, alt);
-    else enquadrar(el, miniL, miniA);
     // Os pequenos continuam clicaveis (levam ate eles); os que sairam
     // da tela nao recebem foco.
     el.inert = estado === "antes" || estado === "longe";
@@ -321,8 +270,6 @@ export function abrirStory(c, aoFecharStory = () => {}) {
   faixa.style.setProperty("--story-duracao", "0s");
   posicionar();
   dialog.showModal();
-  // Aberto, o quadro de texto ja tem altura: refaz o enquadramento.
-  posicionar();
   faixa.scrollLeft = 0;
   requestAnimationFrame(() => requestAnimationFrame(() => faixa.style.removeProperty("--story-duracao")));
   cartoes[0]?.querySelector("[data-compartilhar]")?.focus({ preventScroll: true });

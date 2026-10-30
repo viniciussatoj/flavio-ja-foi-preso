@@ -2,5 +2,3 @@ node_modules/
 dist/
 .claude/
 *.log
-# ferramenta temporaria de deteccao de rostos (so desenvolvimento)
-rostos.html
