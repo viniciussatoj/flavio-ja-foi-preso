@@ -15,6 +15,7 @@
  */
 import { compartilhar, urlDe } from "./compartilhar.js";
 import { caminho } from "./base.js";
+import { SITUACOES } from "../data/casos.js";
 
 const MOBILE = matchMedia("(max-width: 720px)");
 
@@ -29,12 +30,15 @@ let aoFechar = () => {};
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const dominio = (url) => new URL(url).hostname.replace(/^www\./, "");
 
-/** A sequencia de cartoes de um caso. */
-function cartoesDe(c) {
+/** A sequencia de cartoes de um caso. A capa leva o titulo do caso; os
+ *  seguintes, o proprio titulo de c.titulosStory quando houver (sem ele,
+ *  ou com comTitulos false, repetem o do caso). */
+export function cartoesDe(c, { comTitulos = true } = {}) {
+  const titulo = (k) => (comTitulos && c.titulosStory?.[k]) || c.titulo;
   return [
-    { tipo: "texto", html: `${esc(c.chamada)}: ${esc(c.resumo)}` },
-    ...c.descricao.map((p) => ({ tipo: "texto", html: esc(p) })),
-    { tipo: "texto", html: `Onde está o caso: ${esc(c.status)}` },
+    { tipo: "texto", titulo: c.titulo, html: `${esc(c.chamada)}: ${esc(c.resumo)}` },
+    ...c.descricao.map((p, k) => ({ tipo: "texto", titulo: titulo(k), html: esc(p) })),
+    { tipo: "texto", titulo: titulo(c.descricao.length), html: `Onde está o caso: ${esc(c.status)}` },
     { tipo: "fontes" },
   ];
 }
@@ -56,7 +60,7 @@ const PILULA_COMPARTILHAR = (classe = "") => `
     <img src="${caminho("/img/compartilhar.svg")}" width="16" height="16" alt="" />
   </button>`;
 
-function htmlDoCartao(c, cartao, i, total) {
+export function htmlDoCartao(c, cartao, i, total) {
   const progresso = `
     <ol class="cartao__progresso" aria-hidden="true">
       ${Array.from({ length: total }, (_, k) => `<li${k <= i ? " data-feito" : ""}></li>`).join("")}
@@ -105,8 +109,8 @@ function htmlDoCartao(c, cartao, i, total) {
       ${credito}
       ${PILULA_COMPARTILHAR()}
       <div class="cartao__textos">
-        <p class="cartao__titulo">${esc(c.titulo)}</p>
-        <p class="cartao__data">${esc(c.periodo)}</p>
+        <p class="cartao__titulo">${esc(cartao.titulo)}</p>
+        <p class="cartao__data">${esc(c.periodo)} · ${esc(SITUACOES[c.situacao])}</p>
         <p class="cartao__texto">${cartao.html}</p>
       </div>
       ${navDe(i, total)}
@@ -172,6 +176,26 @@ function posicionar() {
     el.inert = estado === "antes" || estado === "longe";
   });
 }
+
+/** O quadro preto de todos os cartoes com foto fica com a altura do
+ *  maior deles (--story-conteudo, lido pelo CSS). Mede com todos no
+ *  tamanho do ativo e sem transicao, e devolve cada um ao seu estado. */
+export function igualarConteudo(container, els) {
+  container.style.removeProperty("--story-conteudo");
+  const duracao = container.style.getPropertyValue("--story-duracao");
+  container.style.setProperty("--story-duracao", "0s");
+  const estados = els.map((el) => el.dataset.estado);
+  els.forEach((el) => { el.dataset.estado = "ativo"; });
+  const maior = Math.max(0, ...els
+    .filter((el) => !el.classList.contains("cartao--sem-foto"))
+    .map((el) => el.querySelector(".cartao__conteudo").offsetHeight));
+  els.forEach((el, i) => { el.dataset.estado = estados[i]; });
+  container.style.setProperty("--story-conteudo", `${maior}px`);
+  void container.offsetHeight;
+  if (duracao) container.style.setProperty("--story-duracao", duracao);
+  else container.style.removeProperty("--story-duracao");
+}
+const igualar = () => igualarConteudo(faixa, cartoes);
 
 /** Mobile: a distancia de um cartao ao seguinte na faixa. */
 function passoMobile() {
@@ -251,11 +275,14 @@ dialog.addEventListener("close", () => {
 // Janela redimensionada ou layout mexido no painel (?calibrate).
 for (const evento of ["resize", "layout"]) {
   addEventListener(evento, () => {
-    if (dialog.open) posicionar();
+    if (!dialog.open) return;
+    igualar();
+    posicionar();
   });
 }
 MOBILE.addEventListener("change", () => {
   if (!dialog.open) return;
+  igualar();
   posicionar();
   ir(atual, false);
 });
@@ -270,6 +297,10 @@ export function abrirStory(c, aoFecharStory = () => {}) {
   faixa.style.setProperty("--story-duracao", "0s");
   posicionar();
   dialog.showModal();
+  // So da para medir com o dialog aberto; de novo quando as fontes
+  // chegarem, se ainda estavam carregando.
+  igualar();
+  document.fonts.ready.then(() => { if (dialog.open && caso === c) igualar(); });
   faixa.scrollLeft = 0;
   requestAnimationFrame(() => requestAnimationFrame(() => faixa.style.removeProperty("--story-duracao")));
   cartoes[0]?.querySelector("[data-compartilhar]")?.focus({ preventScroll: true });

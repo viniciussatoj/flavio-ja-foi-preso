@@ -43,12 +43,22 @@ export const PERGUNTAS = [
   },
 ];
 
+// Mais recente no topo.
 export const SECOES = [
-  { id: "alerj", rotulo: "Como deputado estadual (Alerj, 2003–2018)" },
-  { id: "senado", rotulo: "Período como senador (Senado, 2019–2026)" },
-  { id: "eleitoral", rotulo: "Casos eleitorais e crimes contra a honra" },
   { id: "master", rotulo: "Caso Banco Master e investigações de 2026" },
+  { id: "eleitoral", rotulo: "Casos eleitorais e crimes contra a honra" },
+  { id: "senado", rotulo: "Período como senador (Senado, 2019–2026)" },
+  { id: "alerj", rotulo: "Como deputado estadual (Alerj, 2003–2018)" },
 ];
+
+/** Etiquetas do campo situacao de cada caso. "Sem desfecho": houve apuracao, mas nao
+ *  se sabe como terminou. "Sem investigacao": so reportagem ou pedido. */
+export const SITUACOES = {
+  aberta: "Investigação aberta",
+  encerrada: "Encerrada",
+  "sem-desfecho": "Sem desfecho conhecido",
+  "sem-investigacao": "Sem investigação formal",
+};
 
 /** Os fatos mais recentes, do mais novo para o mais antigo. */
 export const LINHA_DO_TEMPO = [
@@ -114,6 +124,14 @@ export const CASOS = [
     ],
     titulo: "Esquema da \"rachadinha\" no gabinete da Alerj (Caso Queiroz)",
     periodo: "2007–2018",
+    situacao: "encerrada",
+    novidade: "2025-02",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "R$ 1,2 milhão na conta de Queiroz",
+      "Salários devolvidos ao gabinete",
+      "Anulado e arquivado",
+    ],
     chamada: "R$ 6 milhões e um assessor \"milionário\"",
     resumo: "Como o motorista de um deputado movimentou R$ 1,2 milhão? O MPRJ diz que os salários do gabinete voltavam para o chefe e denunciou Flávio por peculato e organização criminosa. As provas acabaram anuladas, e o caso foi arquivado.",
     descricao: [
@@ -141,6 +159,14 @@ export const CASOS = [
     ],
     titulo: "Lavagem de dinheiro com a compra e venda de imóveis",
     periodo: "2010–2017",
+    situacao: "encerrada",
+    novidade: "2022-05",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "19 imóveis e R$ 3,8 milhões de lucro",
+      "R$ 638 mil em dinheiro vivo",
+      "Arquivado com a rachadinha",
+    ],
     chamada: "19 imóveis e dinheiro vivo na mesa",
     resumo: "Duas quitinetes em Copacabana foram compradas com R$ 638 mil em espécie e revendidas com lucro de mais de R$ 800 mil em pouco mais de um ano. Para o MP, era lavagem de dinheiro. Leia como o caso terminou.",
     descricao: [
@@ -166,6 +192,14 @@ export const CASOS = [
     ],
     titulo: "Loja de chocolates Kopenhagen (Bolsotini) usada para lavagem",
     periodo: "2014–2018",
+    situacao: "encerrada",
+    novidade: "2022-05",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "R$ 2,1 milhões em chocolate",
+      "Notas fiscais fraudadas?",
+      "Provas anuladas",
+    ],
     chamada: "A loja de chocolates sob suspeita",
     resumo: "Uma franquia Kopenhagen teria servido para \"legalizar\" R$ 2,1 milhões, segundo o MP. Um ex-sócio fala em notas fiscais fraudadas. Veja o que a investigação encontrou.",
     descricao: [
@@ -190,6 +224,14 @@ export const CASOS = [
     ],
     titulo: "Funcionários fantasmas no gabinete da Alerj",
     periodo: "2007–2018",
+    situacao: "sem-desfecho",
+    novidade: "2022",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "Assessores que não iam à Alerj",
+      "A mãe e a ex-mulher do miliciano",
+      "Sem desfecho conhecido",
+    ],
     chamada: "Assessores que nunca apareciam",
     resumo: "A localização dos celulares indica que alguns funcionários quase nunca iam à Alerj. Entre eles estariam a mãe e a ex-mulher de um miliciano. Quem eram os supostos fantasmas?",
     descricao: [
@@ -214,6 +256,13 @@ export const CASOS = [
     ],
     titulo: "Funcionário fantasma na Câmara dos Deputados",
     periodo: "2000–2002",
+    situacao: "sem-investigacao",
+    novidade: "2002",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "Em Brasília e no Rio ao mesmo tempo",
+      "Nunca investigado",
+    ],
     chamada: "Aos 19 anos, cargo em Brasília e faculdade no Rio",
     resumo: "Como Flávio dava conta de 40 horas semanais na Câmara enquanto estudava e estagiava a mais de mil quilômetros dali? Uma suspeita antiga que voltou à tona em 2026.",
     descricao: [
@@ -236,6 +285,14 @@ export const CASOS = [
     ],
     titulo: "Ligações com a milícia e com Adriano da Nóbrega (\"Escritório do Crime\")",
     periodo: "2003–2018",
+    situacao: "encerrada",
+    novidade: "2026-03",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "Medalha para um homem preso",
+      "A família do miliciano no gabinete",
+      "Flávio fora da nova denúncia",
+    ],
     chamada: "Medalha para um homem preso",
     resumo: "Flávio homenageou Adriano da Nóbrega, depois apontado como chefe do \"Escritório do Crime\", enquanto ele estava atrás das grades. A mãe e a ex-mulher de Adriano trabalhavam no gabinete. Entenda a ligação.",
     descricao: [
@@ -261,6 +318,14 @@ export const CASOS = [
     ],
     titulo: "Vazamento da Operação Furna da Onça",
     periodo: "2018",
+    situacao: "sem-desfecho",
+    novidade: "2020",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "Um aviso antes da operação",
+      "Operação adiada?",
+      "Sem conclusão",
+    ],
     chamada: "Aviso antes da operação?",
     resumo: "O próprio suplente de Flávio no Senado diz que ele soube antes de uma operação da PF. Flávio chama a história de \"invenção\". PF e MPF foram atrás.",
     descricao: [
@@ -285,6 +350,14 @@ export const CASOS = [
     ],
     titulo: "\"Abin paralela\": uso da Abin em favor da defesa na rachadinha",
     periodo: "2020",
+    situacao: "encerrada",
+    novidade: "2025-06",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "A Abin a serviço da defesa?",
+      "Um áudio contra os auditores",
+      "Beneficiário, não indiciado",
+    ],
     chamada: "A agência de inteligência a serviço da família?",
     resumo: "Um áudio gravado no Planalto e relatórios da Abin apontam um esforço para anular a investigação contra Flávio. A PF já indiciou mais de 30 pessoas. Ele aparece como beneficiário.",
     descricao: [
@@ -311,6 +384,15 @@ export const CASOS = [
     ],
     titulo: "Mansão de R$ 6 milhões em Brasília e financiamento do BRB",
     periodo: "2021–2026",
+    situacao: "aberta",
+    novidade: "2026",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "Uma casa de R$ 6 milhões",
+      "Juros abaixo do normal",
+      "Auditoria aponta irregularidades",
+      "Ainda em apuração",
+    ],
     chamada: "Uma mansão de R$ 6 milhões com juros camaradas",
     resumo: "Flávio financiou a casa num banco público, com juros abaixo dos praticados e renda que parecia insuficiente. Agora a PF apura o caso junto com o escândalo do Banco Master.",
     descricao: [
@@ -337,6 +419,14 @@ export const CASOS = [
     ],
     titulo: "Imóveis da família pagos em dinheiro vivo",
     periodo: "1990–2022",
+    situacao: "sem-investigacao",
+    novidade: "2022",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "51 imóveis em “moeda corrente”",
+      "Reportagem tirada do ar",
+      "Nunca investigado",
+    ],
     chamada: "51 imóveis pagos em \"moeda corrente\"",
     resumo: "A reportagem sobre o dinheiro vivo nos imóveis da família foi retirada do ar por ordem judicial, a pedido de Flávio. Saiba o que ela revelou.",
     descricao: [
@@ -360,6 +450,13 @@ export const CASOS = [
     ],
     titulo: "Terreno de marinha obtido por advogado ligado a Flávio",
     periodo: "2022",
+    situacao: "sem-investigacao",
+    novidade: "2022-07",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "Um terreno em Angra e a PEC das Praias",
+      "Ficou na reportagem",
+    ],
     chamada: "O terreno na praia e o relator da PEC",
     resumo: "Um advogado ligado a Flávio conseguiu, num processo rápido, um terreno de marinha em Angra. Na mesma época, Flávio era o relator da lei sobre esses terrenos. Coincidência?",
     descricao: [
@@ -382,6 +479,14 @@ export const CASOS = [
     ],
     titulo: "Calúnia contra Lula (postagem associando-o ao narcotráfico)",
     periodo: "jan.–jun. 2026",
+    situacao: "aberta",
+    novidade: "2026-06",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "Lula acusado de narcotráfico no X",
+      "Para a PF, foi calúnia",
+      "A decisão agora é da PGR",
+    ],
     chamada: "A PF concluiu que houve crime",
     resumo: "Flávio acusou Lula de narcotráfico nas redes. Para a PF, foi calúnia, com pena que pode ser triplicada por ter sido cometida nas redes sociais. Agora a PGR decide se o denuncia.",
     descricao: [
@@ -407,6 +512,14 @@ export const CASOS = [
     ],
     titulo: "Multas do TSE por desinformação na campanha de 2022",
     periodo: "2022–2023",
+    situacao: "encerrada",
+    novidade: "2023",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "Lula ligado ao caso Celso Daniel",
+      "Drogas, aborto e mais uma multa",
+      "Multas aplicadas",
+    ],
     chamada: "Condenado a pagar por fake news",
     resumo: "O TSE multou Flávio por espalhar desinformação contra Lula, inclusive ligando o presidente a um assassinato. São as únicas punições definitivas da lista.",
     descricao: [
@@ -431,6 +544,14 @@ export const CASOS = [
     ],
     titulo: "Propaganda eleitoral antecipada e pedido de inelegibilidade",
     periodo: "mai.–jul. 2026",
+    situacao: "aberta",
+    novidade: "2026-07",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "Culto ou comício?",
+      "Jair Bolsonaro recriado por IA",
+      "Ainda sem decisão",
+    ],
     chamada: "Culto, comício e um Bolsonaro feito por IA",
     resumo: "Um culto com Malafaia e um vídeo que recriava Jair Bolsonaro com inteligência artificial levaram a pedidos de inelegibilidade de Flávio.",
     descricao: [
@@ -456,6 +577,15 @@ export const CASOS = [
     ],
     titulo: "Dinheiro de Daniel Vorcaro (Banco Master) para o filme \"Dark Horse\"",
     periodo: "2024–2026",
+    situacao: "aberta",
+    novidade: "2026-10",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "R$ 134 milhões para um filme",
+      "Um fundo nos EUA e um banqueiro preso",
+      "Flávio admite o pedido",
+      "A PF pede mais 90 dias",
+    ],
     chamada: "R$ 134 milhões pedidos a um banqueiro hoje preso",
     resumo: "Áudios e mensagens mostram Flávio negociando com Daniel Vorcaro, do Banco Master, dinheiro para um filme sobre o pai. Um dia depois de Flávio responder \"Amém!\" a uma mensagem dele, Vorcaro foi preso. O STF investiga.",
     descricao: [
@@ -485,6 +615,15 @@ export const CASOS = [
     ],
     titulo: "Lavagem de dinheiro com o advogado Willer Tomaz (apostas)",
     periodo: "2025–2026",
+    situacao: "aberta",
+    novidade: "2026-10-27",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "R$ 5 bilhões em apostas",
+      "Flávio, o “usuário master”",
+      "Proibido de sair, foi para Miami",
+      "Nas mãos de Moraes, no STF",
+    ],
     chamada: "R$ 5 bilhões em apostas e um \"usuário master\"",
     resumo: "Um amigo advogado de Flávio é suspeito de lavar dinheiro com apostas. A PF diz que o nome de Flávio aparece numa conta ligada a ele. Resultado: passaporte cancelado e fuga do país.",
     descricao: [
@@ -512,6 +651,14 @@ export const CASOS = [
     ],
     titulo: "Suposta articulação com Vorcaro para interferir no 2º turno",
     periodo: "out. 2026",
+    situacao: "sem-investigacao",
+    novidade: "2026-10",
+    // Titulo de cada cartao do story depois da capa (descricao e status).
+    titulosStory: [
+      "Aliados de Lula acionam a PF",
+      "Um HD para virar a eleição",
+      "Por enquanto, só uma suspeita",
+    ],
     chamada: "Um HD misterioso no segundo turno",
     resumo: "Aliados de Lula pedem à PF que investigue se a equipe de Vorcaro e aliados de Flávio tentaram virar a eleição com uma gravação. Por enquanto, é apenas uma suspeita.",
     descricao: [
@@ -524,3 +671,7 @@ export const CASOS = [
     ],
   },
 ];
+
+// Mais recente no topo: pela data da ultima novidade de cada caso
+// (novidade, AAAA, AAAA-MM ou AAAA-MM-DD).
+CASOS.sort((x, y) => y.novidade.localeCompare(x.novidade));

@@ -551,7 +551,14 @@ html:has(.story[open]) { overflow: hidden; }
 .cartao .pilula--cheia { align-self: flex-start; }
 .cartao .pilula--grande { align-self: stretch; }
 
+/* Mesma altura do quadro preto em todos os cartoes do story: a do maior
+   (--story-conteudo, medido em story.js). O contador fica embaixo. */
+.cartao[data-estado="ativo"]:not(.cartao--sem-foto) .cartao__conteudo {
+  min-height: var(--story-conteudo, 0px);
+}
+
 .cartao__nav {
+  margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -617,6 +624,8 @@ html:has(.story[open]) { overflow: hidden; }
     transition: none;
   }
   .cartao__fechar { display: block; top: 24px; }
+  /* Aqui o seguinte aparece inteiro ao arrastar: todos com a mesma altura. */
+  .cartao:not(.cartao--sem-foto) .cartao__conteudo { min-height: var(--story-conteudo, 0px); }
 }
 
 /* Barrinhas de progresso, so no mobile. */

@@ -5,13 +5,17 @@
  * compartilhamento.js), para o texto ja estar no HTML que o buscador le.
  * Nao toca no DOM: recebe a base do endereco e devolve strings.
  */
-import { ATUALIZADO, CASOS, LINHA_DO_TEMPO, PERGUNTAS, SECOES } from "../data/casos.js";
+import { ATUALIZADO, CASOS, LINHA_DO_TEMPO, PERGUNTAS, SECOES, SITUACOES } from "../data/casos.js";
 
 export const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
 const NOME = "Flávio já está preso?";
 const dataBr = (iso) => iso.split("-").reverse().join("/");
 const dominio = (url) => new URL(url).hostname.replace(/^www\./, "");
+
+/** Etiqueta da situacao do caso (aberta, encerrada...). */
+export const htmlSituacao = (c) =>
+  `<span class="data situacao--${c.situacao}">${esc(SITUACOES[c.situacao])}</span>`;
 
 /** Linha do tempo (conteudo do <ol id="fatos">). */
 export function htmlFatos() {
@@ -33,7 +37,7 @@ export function htmlSecoes(base) {
   return SECOES.map((s) => {
     const casos = CASOS.filter((c) => c.secao === s.id).map((c) => `
       <li class="caso" id="caso-${c.slug}">
-        <h3 class="caso__titulo"><a class="caso__link" href="${base}c/${c.slug}/" data-caso="${c.slug}">${esc(c.titulo)}</a> <span class="data">${esc(c.periodo)}</span></h3>
+        <h3 class="caso__titulo"><a class="caso__link" href="${base}c/${c.slug}/" data-caso="${c.slug}">${esc(c.titulo)}</a> <span class="data">${esc(c.periodo)}</span> ${htmlSituacao(c)}</h3>
         <p class="caso__resumo">${esc(c.chamada)}: ${esc(c.resumo)}</p>
         <a class="caso__mais" href="${base}c/${c.slug}/" data-caso="${c.slug}">
           <span>Mais detalhes</span>${seta}
@@ -91,7 +95,7 @@ export function htmlArtigo(c, base) {
     <article class="artigo">
       <nav class="artigo__migalha" aria-label="Você está em"><a href="${base}">${NOME}</a> <span aria-hidden="true">›</span> ${esc(secao)}</nav>
       <h1 class="artigo__titulo">${esc(c.titulo)}</h1>
-      <p class="artigo__meta"><span class="data">${esc(c.periodo)}</span> <span class="data">Atualizado em ${dataBr(ATUALIZADO)}</span></p>
+      <p class="artigo__meta"><span class="data">${esc(c.periodo)}</span> ${htmlSituacao(c)} <span class="data">Atualizado em ${dataBr(ATUALIZADO)}</span></p>
       ${foto}
       <p class="artigo__chamada"><strong>${esc(c.chamada)}.</strong> ${esc(c.resumo)}</p>
       ${c.descricao.map((p) => `<p class="artigo__texto">${esc(p)}</p>`).join("\n      ")}
