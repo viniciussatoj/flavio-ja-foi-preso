@@ -31,7 +31,30 @@ function conteudoNoHtml() {
   };
 }
 
+/* Google Analytics, so no build: as visitas do servidor de
+   desenvolvimento nao entram na conta. As paginas de caso copiam o
+   <head> do dist/index.html e herdam o script. */
+const GA_ID = "G-L8DKQM11G9";
+function analytics() {
+  return {
+    name: "analytics",
+    apply: "build",
+    transformIndexHtml(html) {
+      const tag = `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "${GA_ID}");
+    </script>`;
+      // Logo depois do charset, que precisa vir primeiro.
+      const charset = '<meta charset="utf-8" />';
+      return html.replace(charset, `${charset}\n    ${tag}`);
+    },
+  };
+}
+
 export default defineConfig({
   base: BASE,
-  plugins: [conteudoNoHtml()],
+  plugins: [conteudoNoHtml(), analytics()],
 });
