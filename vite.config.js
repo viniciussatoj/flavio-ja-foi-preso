@@ -34,7 +34,7 @@ function conteudoNoHtml() {
 /* Google Analytics, so no build: as visitas do servidor de
    desenvolvimento nao entram na conta. As paginas de caso copiam o
    <head> do dist/index.html e herdam o script. */
-const GA_ID = "G-L8DKQM11G9";
+const GA_ID = "G-MT61DG7P3S";
 function analytics() {
   return {
     name: "analytics",
