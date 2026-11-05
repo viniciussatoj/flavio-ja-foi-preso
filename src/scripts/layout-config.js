@@ -23,7 +23,7 @@ export const LAYOUT = {
   inverterTituloMobile: true,
 
   desktop: {
-    titulo: 120, // px, Instrument Serif
+    titulo: 120, // px, Gradeur DEMO VERSION
     tituloEntrelinha: 110, // px, de uma linha a outra do titulo
     topo: 127, // px, do topo da janela ao titulo
     coluna: 916, // px, largura da coluna de conteudo

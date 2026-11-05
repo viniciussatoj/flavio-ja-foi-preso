@@ -1,3 +1,20 @@
+/* Gradeur: os arquivos ficam em public/fonts, para os visitantes que
+   nao tem a fonte instalada. */
+@font-face {
+  font-family: "Gradeur DEMO VERSION";
+  src: local("Gradeur DEMO VERSION"), url("/fonts/gradeur.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gradeur DEMO VERSION";
+  src: local("Gradeur DEMO VERSION Italic"), url("/fonts/gradeur-italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
 /* Os valores vem de src/scripts/layout-config.js, escritos no :root por
    aplicarLayout(). Os padroes abaixo so seguram a pagina se o JS falhar. */
 :root {
@@ -6,7 +23,7 @@
   --vermelho: #ff0000;
   --azul: #0900ff;
   --claro: #f4f4f4;
-  --serif: "Instrument Serif", Georgia, serif;
+  --serif: "Gradeur DEMO VERSION", Georgia, serif;
   --sans: "Lato", system-ui, sans-serif;
 }
 
